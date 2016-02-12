@@ -192,7 +192,7 @@ var wifiController={
 
 	getBSSIDCoverage:function(req,res){
 
-		var datePrecision=parseInt(req.params.datePrecision) || 100;
+		var datePrecision=parseInt(req.params.datePrecision) || 365;
 		var startDate,endDate;
 		var range={
 			timestamp:{
