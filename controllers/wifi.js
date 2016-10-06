@@ -152,7 +152,7 @@ var wifiController={
 			req.params.timestamp=new Date().getTime();
 		}else
 		{
-			req.params.timestamp=new Date(req.params.timestamp).getTime();
+			req.params.timestamp=req.params.timestamp;
 		}
 		
 		
@@ -200,8 +200,8 @@ var wifiController={
 		}
 		if (req.params.timestamp != undefined && req.params.timestamp != ""){
 			
-			range.timestamp.lte=req.params.timestamp+(datePrecision*24*60*60*1000);
-			range.timestamp.gte=req.params.timestamp-(datePrecision*24*60*60*1000);
+			range.timestamp.lte=parseInt(req.params.timestamp)+(datePrecision*24*60*60*1000);
+			range.timestamp.gte=parseInt(req.params.timestamp)-(datePrecision*24*60*60*1000);
 			endDate=new Date(range.timestamp.lte);
 			startDate=new Date(range.timestamp.gte);
 		}

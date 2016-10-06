@@ -120,7 +120,7 @@ function Routes(server) {
 					encryption:{isRequired:false,isBoolean:true},
 					encryptiontype:{isRequired:false},
 					authenticationtype:{isRequired:false},
-					timestamp:{isRequired:false,isDate:true},
+					timestamp:{isRequired:false},
 					source:{isRequired:false},
 					measurement:{isRequired:false,isBoolean:true},
 					size:{isRequired:false,isInt:true,description:'Max number of hits to return'}
@@ -171,7 +171,7 @@ function Routes(server) {
 			validation: {
 				queries:{
 					bssid:{isRequired:true},
-					timestamp:{isRequired:false,isDate:true},
+					timestamp:{isRequired:false},
 					geohashPrecision:{isRequired:false,isInt:true,description:'OPTIONAL: Geohash precision value: between 1 (~ 5000 x 5000 km) and 12 (~ 4 x 2 cm). Default value=8 (~ 40 x 20 m)'},
 					datePrecision:{isRequired:false,isInt:true,description:'OPTIONAL: Number of days around timestamp in which measurement is taken. Default value=100 (between 100 days before and 100 days after timestamp)'}
 				}
