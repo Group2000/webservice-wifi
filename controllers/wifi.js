@@ -16,17 +16,30 @@ var wifiController={
 
 	getWifi: function(req,res){
 		
-		
-		var timestamp;
-		if (req.params.timestamp != undefined && req.params.timestamp != "")
-			timestamp = req.params.timestamp;
-		else
-			timestamp = new Date().getTime();
-		
+		var datePrecision=parseInt(req.params.datePrecision) || 100;
+	     var startDate,endDate;
+	     var range={
+	             timestamp:{
+	             }
+	     }
+	     if (req.params.timestamp != undefined && req.params.timestamp != ""){
+	             range.timestamp.lte=parseInt(req.params.timestamp)+(datePrecision*24*60*60*1000);
+	             range.timestamp.gte=parseInt(req.params.timestamp)-(datePrecision*24*60*60*1000);
+	             endDate=new Date(range.timestamp.lte);
+	             startDate=new Date(range.timestamp.gte);
+	     }
+	     else{
+	             var timestamp = new Date().getTime();
+	             range.timestamp.gte=timestamp-(datePrecision*24*60*60*1000);
+	             endDate=new Date();
+	             startDate=new Date(range.timestamp.gte);
 
-		var m = [];
-		  
-		for(var key in req.params){
+	     }
+	     
+	     var m = [];
+	     m.push({range:range});
+	     
+	     for(var key in req.params){
 		  	switch(key){
 		  		case 'timestamp':
 		  		case 'location':
@@ -91,18 +104,13 @@ var wifiController={
 	    	}
 	    }
 	  }
-		 console.log(JSON.stringify(q));
+		 //console.log(JSON.stringify(q));
 		esClient.search({
 	    	index:config.elasticsearch.index,
 	    	type:config.elasticsearch.type,
 		    body: q
 		}).then(function(body) {
-
-
 			res.send(body)
-
-			
-			
 		}, function(error) {
 		    logger.log('error',error.message);
 		    logger.log('info',q);
@@ -529,7 +537,8 @@ var wifiController={
 			endDate=new Date();
 			startDate=new Date(range.timestamp.gte);	
 		}
-
+		m.push({range:range});
+		
 		if(req.params.top_right&&req.params.bottom_left){
 			var tr=req.params.top_right;
 			var bl=req.params.bottom_left;//.split(',');
@@ -659,6 +668,7 @@ var wifiController={
 		}
 
 		var m = [];
+		m.push({range:range});
 		req.params.measurement=true;
 		var precision=parseInt(req.params.geohashPrecision) || 7;
 
