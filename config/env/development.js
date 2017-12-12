@@ -14,7 +14,7 @@ config.service={
 };
 
 config.server={
-	useSSL:true,
+	useSSL:false,
 	port:3002,
 	address:'127.0.0.1'
 };
@@ -25,12 +25,12 @@ config.ssl={
 };
 
 config.zookeeper={
-	servers:'localhost:2181'
+	servers:'zookeeper:2181'
 };
 
 config.elasticsearch={
 	hosts:[
-      'localhost:9200'
+      'database:9200'
       
     ],
     index:'wifi_measurements_v1-dev',
